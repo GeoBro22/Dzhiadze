@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/popMoviesFragment">
+
+    <fragment
+        android:id="@+id/favoritesFragment"
+        android:name="com.example.dzhiadze.fragments.FavoritesFragment"
+        android:label="Избранное"
+        tools:layout="@layout/fragment_favorites" >
+        <action
+            android:id="@+id/action_favoritesFragment_to_movieFragment"
+            app:destination="@id/movieFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out"/>
+    </fragment>
+    <fragment
+        android:id="@+id/popMoviesFragment"
+        android:name="com.example.dzhiadze.fragments.PopMoviesFragment"
+        android:label="Популярные"
+        tools:layout="@layout/fragment_pop_movies" >
+        <action
+            android:id="@+id/action_popMoviesFragment_to_favoritesFragment"
+            app:destination="@id/favoritesFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out"/>
+        <action
+            android:id="@+id/action_popMoviesFragment_to_movieFragment"
+            app:destination="@id/movieFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out"/>
+    </fragment>
+    <fragment
+        android:id="@+id/movieFragment"
+        android:name="com.example.dzhiadze.fragments.MovieFragment"
+        android:label=" "
+        tools:layout="@layout/fragment_movie" />
+</navigation>

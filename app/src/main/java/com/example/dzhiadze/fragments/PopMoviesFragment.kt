@@ -1,0 +1,63 @@
+package com.example.dzhiadze.fragments
+
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.dzhiadze.ActivityViewModel
+import com.example.dzhiadze.App
+import com.example.dzhiadze.adapters.PopMoviesAdapter
+import com.example.dzhiadze.Service
+import com.example.dzhiadze.databinding.FragmentPopMoviesBinding
+
+
+class PopMoviesFragment : Fragment() {
+
+    private lateinit var binding: FragmentPopMoviesBinding
+    private lateinit var adapter: PopMoviesAdapter
+    private val datamodel: ActivityViewModel by activityViewModels()
+    private val service: Service
+        get() = (context?.applicationContext as App).service
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+
+        binding = FragmentPopMoviesBinding.inflate(inflater, container, false)
+        if (datamodel.reddy.value==false) {
+            datamodel.reddy.observe(viewLifecycleOwner) { state ->
+                if (state == true) {
+                    loadRecycler()
+                }
+            }
+        }
+        else
+        {
+            loadRecycler()
+
+        }
+
+        return binding.root
+    }
+
+    private fun loadRecycler()
+    {
+        datamodel.filmCardState.value = View.VISIBLE
+        val controller = findNavController()
+        adapter = PopMoviesAdapter(controller, datamodel, service)
+        adapter.movies = datamodel.movies.value!!
+
+        val layoutManagerTomorrow =
+            LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        binding.recyclerToday.layoutManager = layoutManagerTomorrow
+        binding.recyclerToday.adapter = adapter
+    }
+
+
+
+
+}

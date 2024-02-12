@@ -1,7 +1,7 @@
 package com.example.dzhiadze.retrofit
 
-import android.util.Log
-import com.example.dzhiadze.retrofit.models.Movies
+import com.example.dzhiadze.models.MovieInfoModel
+import com.example.dzhiadze.models.MovieModel
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -13,14 +13,26 @@ class RetrofitClass {
         .baseUrl("https://kinopoiskapiunofficial.tech")
         .addConverterFactory(GsonConverterFactory.create())
         .build().create(RetrofitRepository::class.java)
-    suspend fun getMoviesFromApi():Movies {
+    suspend fun getMovieByIdFromApi(id:Int):MovieInfoModel{
+        val response = apiService.getMovieById(
+            token = token,
+            id = id
+        )
+        return response.toMovieInfoModel()
+    }
+
+    suspend fun getMoviesFromApi(page :Int):List<MovieModel> {
 
         val response = apiService.searchMovies(
             token = token,
-            type = "FILM"
+            page = page
         )
-        Log.d("AAA", response.toString())
 
-        return response
+        val movies: MutableList<MovieModel> = mutableListOf()
+        for (i in 0 until response.films.size) {
+            val movie = response.films[i].toMovieModel()
+            movies.add(movie)
+        }
+        return movies
     }
 }

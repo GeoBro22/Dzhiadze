@@ -45,6 +45,8 @@ android {
 }
 
 dependencies {
+    implementation("androidx.legacy:legacy-support-v4:1.0.0")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.7.0")
     val nav_version = "2.6.0"
     val room_version = "2.5.1"
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")

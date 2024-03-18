@@ -1,16 +1,17 @@
-package com.example.dzhiadze.fragments
+package com.example.dzhiadze.fragments.movie
 
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
@@ -28,7 +29,10 @@ class MovieFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         binding = FragmentMovieBinding.inflate(inflater, container, false)
+        val movieViewModel =
+            ViewModelProvider(this).get(MovieViewModel::class.java)
         val id = arguments?.getInt("id")
         datamodel.internetConection.value=hasConnection()
         datamodel.internetConection.observe(viewLifecycleOwner) { state ->
@@ -36,8 +40,11 @@ class MovieFragment : Fragment() {
                 loadData(id!!)
             }
         }
+
         return binding.root
     }
+
+
 
     private fun loadData(id:Int) {
         val apiOb = RetrofitClass()
@@ -46,6 +53,7 @@ class MovieFragment : Fragment() {
         var year=""
 
         lifecycleScope.launch(Dispatchers.IO) {
+
             val s = apiOb.getMovieByIdFromApi(id)
 
             launch(Dispatchers.Main) {
@@ -90,6 +98,7 @@ class MovieFragment : Fragment() {
                 }
                 binding.genre.text=genres
                 binding.movFr.visibility=VISIBLE
+                binding.progressBar.visibility= GONE
 
             }
 

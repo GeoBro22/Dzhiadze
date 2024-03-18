@@ -2,6 +2,7 @@ package com.example.dzhiadze
 
 import android.app.Activity
 import android.view.View
+import android.view.View.VISIBLE
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -14,8 +15,9 @@ import kotlinx.coroutines.launch
 
 open class ActivityViewModel : ViewModel() {
     val filmCardState:MutableLiveData<Int> by lazy {
-        MutableLiveData<Int>()
+        MutableLiveData<Int>(VISIBLE)
     }
+
     val reddy:MutableLiveData<Boolean> by lazy {
         MutableLiveData<Boolean>(false)
     }

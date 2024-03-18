@@ -13,8 +13,5 @@ import com.example.dzhiadze.movies.room.entities.FavsDbEntity
     ]
 )
 abstract class AppDatabase : RoomDatabase() {
-
     abstract fun getMoviesDao(): MoviesDao
-
-
 }

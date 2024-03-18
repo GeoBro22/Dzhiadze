@@ -5,27 +5,21 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import android.os.Bundle
-import android.util.Log
-import android.view.View
 import android.view.View.GONE
-import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.NavController
-import androidx.navigation.Navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.example.dzhiadze.databinding.ActivityMainBinding
 import com.example.dzhiadze.models.MovieModel
 import com.example.dzhiadze.retrofit.RetrofitClass
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 
@@ -45,26 +39,29 @@ class MainActivity : AppCompatActivity() {
         enableEdgeToEdge()
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         datamodel.internetConection.value=hasConnection()
+        datamodel.filmCardState.observe(this) { state ->
+            binding.navView.visibility = datamodel.filmCardState.value!!
+        }
 
 
         datamodel.internetConection.observe(this) { state ->
             if (state == true) {
+
+                val navView: BottomNavigationView = binding.navView
+                navView.setupWithNavController(controller)
+
+
+
                 binding.normalCont.visibility = VISIBLE
                 binding.internetProbCont.visibility = GONE
                 binding.topBar.setupWithNavController(controller)
-                datamodel.filmCardState.observe(this) { state ->
-                    binding.favButton.visibility = state
-                    binding.popButton.visibility = state
-                }
+                val appBarConfiguration = AppBarConfiguration(setOf(R.id.homeFragment, R.id.profileFragment))
+                binding.topBar.setupWithNavController(controller, appBarConfiguration)
+
                 if (datamodel.reddy.value==false and state){
                     loadData()
-                }
-                binding.favButton.setOnClickListener{
-                    controller.navigate(R.id.favoritesFragment)
-                }
-                binding.popButton.setOnClickListener{
-                    controller.navigate(R.id.popMoviesFragment)
                 }
             }
             else{

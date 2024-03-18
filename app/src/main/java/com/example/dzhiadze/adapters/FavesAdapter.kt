@@ -13,7 +13,7 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.example.dzhiadze.ActivityViewModel
 import com.example.dzhiadze.R
 import com.example.dzhiadze.Service
-import com.example.dzhiadze.databinding.MovieCardBinding
+import com.example.dzhiadze.databinding.MovieCardFavesBinding
 import com.example.dzhiadze.models.MovieModel
 import com.example.dzhiadze.movies.room.entities.FavsDbEntity
 import kotlinx.coroutines.Dispatchers
@@ -34,7 +34,7 @@ class FavesAdapter(val controller: NavController, val datamodel: ActivityViewMod
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val binding = MovieCardBinding.inflate(inflater, parent, false)
+        val binding = MovieCardFavesBinding.inflate(inflater, parent, false)
         return MovieViewHolder(binding)
     }
 
@@ -54,7 +54,7 @@ class FavesAdapter(val controller: NavController, val datamodel: ActivityViewMod
             holder.itemView.setOnClickListener {
                 bundle.putInt("id",movie.kinopoiskId)
                 controller.navigate(
-                    R.id.movieFragment,
+                    R.id.action_favoritesFragment_to_movieFragment,
                     bundle
                 )
                 datamodel.filmCardState.value= View.INVISIBLE
@@ -87,7 +87,7 @@ class FavesAdapter(val controller: NavController, val datamodel: ActivityViewMod
 
 
     class MovieViewHolder(
-        val binding: MovieCardBinding
+        val binding: MovieCardFavesBinding
     ) : RecyclerView.ViewHolder(binding.root)
 
 

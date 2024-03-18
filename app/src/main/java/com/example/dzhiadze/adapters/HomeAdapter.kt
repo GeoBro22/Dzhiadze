@@ -13,15 +13,15 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.example.dzhiadze.ActivityViewModel
 import com.example.dzhiadze.R
 import com.example.dzhiadze.Service
-import com.example.dzhiadze.databinding.MovieCardBinding
+import com.example.dzhiadze.databinding.MovieCardMainBinding
 import com.example.dzhiadze.models.MovieModel
 import com.example.dzhiadze.movies.room.entities.FavsDbEntity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-class PopMoviesAdapter(val controller: NavController, val datamodel: ActivityViewModel, val service: Service) :
-    RecyclerView.Adapter<PopMoviesAdapter.MovieViewHolder>() {
+class HomeAdapter(val controller: NavController, val datamodel: ActivityViewModel, val service: Service) :
+    RecyclerView.Adapter<HomeAdapter.MovieViewHolder>() {
 
     var movies: List<MovieModel> = emptyList()
         set(newValue) {
@@ -34,7 +34,7 @@ class PopMoviesAdapter(val controller: NavController, val datamodel: ActivityVie
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val binding = MovieCardBinding.inflate(inflater, parent, false)
+        val binding = MovieCardMainBinding.inflate(inflater, parent, false)
         return MovieViewHolder(binding)
     }
 
@@ -54,11 +54,12 @@ class PopMoviesAdapter(val controller: NavController, val datamodel: ActivityVie
             val bundle = Bundle()
             holder.itemView.setOnClickListener {
                 bundle.putInt("id",movie.kinopoiskId)
+                datamodel.filmCardState.value= View.INVISIBLE
                 controller.navigate(
-                    R.id.movieFragment,
+                    R.id.action_homeFragment_to_movieFragment,
                     bundle
                 )
-                datamodel.filmCardState.value= View.INVISIBLE
+
             }
 
             holder.itemView.setOnLongClickListener {
@@ -85,7 +86,7 @@ class PopMoviesAdapter(val controller: NavController, val datamodel: ActivityVie
 
 
     class MovieViewHolder(
-        val binding: MovieCardBinding
+        val binding: MovieCardMainBinding
     ) : RecyclerView.ViewHolder(binding.root)
 
 

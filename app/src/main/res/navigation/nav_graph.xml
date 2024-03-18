@@ -3,11 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/popMoviesFragment">
+    app:startDestination="@id/homeFragment">
 
     <fragment
         android:id="@+id/favoritesFragment"
-        android:name="com.example.dzhiadze.fragments.FavoritesFragment"
+        android:name="com.example.dzhiadze.fragments.favourites.FavoritesFragment"
         android:label="Избранное"
         tools:layout="@layout/fragment_favorites" >
         <action
@@ -19,20 +19,18 @@
             app:popExitAnim="@anim/fade_out"/>
     </fragment>
     <fragment
-        android:id="@+id/popMoviesFragment"
-        android:name="com.example.dzhiadze.fragments.PopMoviesFragment"
-        android:label="Популярные"
-        tools:layout="@layout/fragment_pop_movies" >
+        android:id="@+id/homeFragment"
+        android:name="com.example.dzhiadze.fragments.home.HomeFragment"
+        android:label="Фильмы"
+        tools:layout="@layout/fragment_home" >
         <action
-            android:id="@+id/action_popMoviesFragment_to_favoritesFragment"
-            app:destination="@id/favoritesFragment"
-            app:enterAnim="@anim/fade_in"
-            app:exitAnim="@anim/fade_out"
-            app:popEnterAnim="@anim/fade_in"
-            app:popExitAnim="@anim/fade_out"/>
-        <action
-            android:id="@+id/action_popMoviesFragment_to_movieFragment"
+            android:id="@+id/action_homeFragment_to_movieFragment"
             app:destination="@id/movieFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out" />
+        <action
+            android:id="@+id/action_homeFragment_to_profileFragment2"
+            app:destination="@id/profileFragment"
             app:enterAnim="@anim/fade_in"
             app:exitAnim="@anim/fade_out"
             app:popEnterAnim="@anim/fade_in"
@@ -40,7 +38,25 @@
     </fragment>
     <fragment
         android:id="@+id/movieFragment"
-        android:name="com.example.dzhiadze.fragments.MovieFragment"
+        android:name="com.example.dzhiadze.fragments.movie.MovieFragment"
         android:label=" "
         tools:layout="@layout/fragment_movie" />
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.dzhiadze.fragments.profile.ProfileFragment"
+        android:label="Профиль"
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_profileFragment_to_favoritesFragment"
+            app:destination="@id/favoritesFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out" />
+        <action
+            android:id="@+id/action_profileFragment_to_homeFragment"
+            app:destination="@id/homeFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out"/>
+    </fragment>
 </navigation>
